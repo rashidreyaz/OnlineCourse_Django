@@ -106,11 +106,11 @@ class Question(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     # Foreign key to lesson
     # question text
-    question_text=models.TextField()
-    lesson_id = models.TextField()
+    question_text=models.TextField(default='Basic Question')
+    lesson_id = models.IntegerField(default=1)
     grade = models.TextField()
 
-    is_correct=models.BooleanField()
+    is_correct=models.BooleanField(default=False)
     # question grade/mark
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
@@ -131,9 +131,9 @@ class Question(models.Model):
 
 class Choice(models.Model):
     question = models.ManyToManyField(Question)
-    choice_text = models.TextField()
+    choice_text = models.TextField(default='1')
 
-    is_correct=models.BooleanField()
+    is_correct=models.BooleanField(default=False)
     def is_question_correct(self, selected_ids):
        all_answers = self.choice_set.filter(is_correct=True).count()
        selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()

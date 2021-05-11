@@ -69,12 +69,9 @@ def check_if_enrolled(user, course):
             is_enrolled = True
     return is_enrolled
 
-
-# CourseListView
 class CourseListView(generic.ListView):
     template_name = 'onlinecourse/course_list_bootstrap.html'
     context_object_name = 'course_list'
-
     def get_queryset(self):
         user = self.request.user
         courses = Course.objects.order_by('-total_enrollment')[:10]
